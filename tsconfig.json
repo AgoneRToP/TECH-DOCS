@@ -14,10 +14,10 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "types": ["node"],
     "paths": {
       "@/*": ["./src/*"]
     },
+    // "types": ["node"],
     "incremental": false,
     "skipLibCheck": true,
     "strictNullChecks": true,

@@ -5,8 +5,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Category } from './models/categories.model';
+import { Category } from './models';
 import { isObjectIdOrHexString, Model } from 'mongoose';
+import { CreateCategoryDto, UpdateCategoryDto } from './dtos';
 
 @Injectable()
 export class CategoryService {
@@ -15,106 +16,74 @@ export class CategoryService {
   ) {}
 
   async getAll() {
-    const categories = await this.categoryModel.find();
+    const data = await this.categoryModel
+      .find()
+      .populate('parentCategory', 'name');
     return {
       success: true,
-      data: categories,
+      data,
     };
   }
 
   async getOne(id: string) {
-    if (!isObjectIdOrHexString(id)) {
-      throw new BadRequestException('ID format error');
-    }
+    const data = await this.categoryModel
+      .findById(id)
+      .populate('parentCategory', 'name');
 
-    const category = await this.categoryModel.findById(id);
-
-    if (!category) {
-      throw new NotFoundException('Category not found');
-    }
+    if (!data) throw new NotFoundException('Категория не найдена');
 
     return {
       success: true,
-      data: category,
+      data,
     };
   }
 
-  async create({
-    name,
-    icon,
-    category,
-  }: {
-    name: string;
-    icon?: string;
-    category?: string;
-  }) {
-    const existing = await this.categoryModel.findOne({ name });
+  async create(payload: CreateCategoryDto) {
+    const existing = await this.categoryModel.findOne({ slug: payload.slug });
 
-    if (existing) {
-      throw new ConflictException('Category already exists');
-    }
+    if (existing)
+      throw new ConflictException('Категория с таким slug уже существует');
 
-    const newCategory = await this.categoryModel.create({
-      name,
-      category,
-      icon,
-    });
+    const data = await this.categoryModel.create(payload);
 
     return {
       success: true,
-      data: newCategory,
+      data,
     };
   }
 
-  async update(
-    id: string,
-    {
-      name,
-      icon,
-      category,
-    }: { name: string; icon?: string; category?: string },
-  ) {
-    if (!isObjectIdOrHexString(id)) {
-      throw new BadRequestException('ID format error');
-    }
-
-    if (name) {
+  async update(id: string, payload: UpdateCategoryDto) {
+    if (payload.slug) {
       const existing = await this.categoryModel.findOne({
-        name,
+        slug: payload.slug,
         _id: { $ne: id },
       });
 
-      if (existing) {
-        throw new ConflictException('Category with this name already exists');
-      }
+      if (existing)
+        throw new ConflictException('Этот slug уже занят другой категорией');
     }
 
-    const updatedCategory = await this.categoryModel.findByIdAndUpdate(
+    const data = await this.categoryModel.findByIdAndUpdate(
       id,
-      { name, icon, category },
+      { $set: payload },
       { new: true },
     );
 
-    if (!updatedCategory) {
-      throw new NotFoundException('Category not found');
-    }
+    if (!data) throw new NotFoundException('Категория не найдена');
 
     return {
       success: true,
-      data: updatedCategory,
+      data: data,
     };
   }
 
   async delete(id: string) {
-    const categoryId = await this.categoryModel.findByIdAndDelete(id).exec();
-
-    if (!categoryId) {
-      throw new NotFoundException('Category not found');
-    }
+    const data = await this.categoryModel.findByIdAndDelete(id).exec();
+    if (!data) throw new NotFoundException('Категория не найдена');
 
     return {
       success: true,
-      data: categoryId,
+      data,
     };
   }
 }

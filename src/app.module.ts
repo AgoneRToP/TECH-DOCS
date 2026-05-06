@@ -1,8 +1,13 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModule } from './modules/users/users.module';
-import { CategoryModule } from '@/modules/categories/categories.module';
+import { CategoryModule, AdminModule } from '@/modules';
+import { LoggerMiddleware } from './middlewares';
 
 @Module({
   imports: [
@@ -10,14 +15,20 @@ import { CategoryModule } from '@/modules/categories/categories.module';
       isGlobal: true,
       validate(config) {
         if (!config.MONGO_URL) {
-          throw new Error('MONGO_URL is not set in .env file');
+          throw new Error('MONGO_URL не установлена в файле .env');
         }
         return config;
       },
     }),
     MongooseModule.forRoot(process.env.MONGO_URL as string),
-    UserModule,
+    AdminModule,
     CategoryModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(LoggerMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.ALL });
+  }
+}
