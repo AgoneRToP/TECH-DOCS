@@ -8,14 +8,14 @@ import {
   Put,
   Render,
 } from '@nestjs/common';
-import { CategoryService } from './categories.service';
+import { UserService } from './users.service';
 
-@Controller('/categories')
-export class CategoryController {
-  constructor(private readonly service: CategoryService) {}
+@Controller('/users')
+export class UserController {
+  constructor(private readonly service: UserService) {}
 
   @Get()
-  @Render('categories')
+  @Render('users')
   async getAll() {
     return await this.service.getAll();
   }

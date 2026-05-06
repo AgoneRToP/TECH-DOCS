@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './modules/users/users.module';
 import { CategoryModule } from '@/modules/categories/categories.module';
 
 @Module({
@@ -15,6 +16,7 @@ import { CategoryModule } from '@/modules/categories/categories.module';
       },
     }),
     MongooseModule.forRoot(process.env.MONGO_URL as string),
+    UserModule,
     CategoryModule,
   ],
 })

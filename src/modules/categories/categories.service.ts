@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Category } from './models/category.model';
+import { Category } from './models/categories.model';
 import { isObjectIdOrHexString, Model } from 'mongoose';
 
 @Injectable()
