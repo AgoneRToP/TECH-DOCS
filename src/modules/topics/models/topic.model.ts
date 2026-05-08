@@ -1,25 +1,33 @@
 import { Category } from '@/modules/categories';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Topic extends Document {
-  @Prop({ required: true })
+  @Prop({ type: SchemaTypes.String, required: true })
   title: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ type: SchemaTypes.String, required: true, unique: true })
   slug: string;
 
-  @Prop({ type: Object, required: true })
+  @Prop({ type: SchemaTypes.Mixed, required: true })
   content: any;
 
-  @Prop({ default: 'draft', enum: ['draft', 'published'] })
+  @Prop({
+    type: SchemaTypes.String,
+    default: 'draft',
+    enum: ['draft', 'published'],
+  })
   status: string;
 
-  @Prop()
+  @Prop({ type: SchemaTypes.String })
   author: string;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Category', required: true })
+  @Prop({
+    type: SchemaTypes.ObjectId,
+    ref: 'Category',
+    required: true,
+  })
   category: Category;
 }
 

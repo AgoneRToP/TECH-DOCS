@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CategoryModule, AdminModule } from '@/modules';
+import { CategoryModule, AdminModule, TopicModule } from '@/modules';
 import { LoggerMiddleware } from './middlewares';
 
 @Module({
@@ -23,6 +23,7 @@ import { LoggerMiddleware } from './middlewares';
     MongooseModule.forRoot(process.env.MONGO_URL as string),
     AdminModule,
     CategoryModule,
+    TopicModule,
   ],
 })
 export class AppModule implements NestModule {
