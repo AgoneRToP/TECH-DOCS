@@ -36,11 +36,11 @@ export class TopicController {
     return { topics: allTopics, topic: currentTopic };
   }
 
-  @Get('/create')
-  @Render('topic-form')
-  async renderCreateForm() {
-    return { title: 'Создать новый топик' };
-  }
+  // @Get('/create')
+  // @Render('topic-form')
+  // async renderCreateForm() {
+  //   return { title: 'Создать новый топик' };
+  // }
 
   @Post()
   async create(@Body() payload: CreateTopicDto) {
