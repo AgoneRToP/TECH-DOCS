@@ -1,12 +1,11 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Category } from './models';
-import { isObjectIdOrHexString, Model } from 'mongoose';
+import { Model } from 'mongoose';
 import { CreateCategoryDto, UpdateCategoryDto } from './dtos';
 
 @Injectable()

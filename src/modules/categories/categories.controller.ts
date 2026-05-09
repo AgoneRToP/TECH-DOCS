@@ -10,6 +10,7 @@ import {
 import { CategoryService } from './categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dtos';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
+import { Roles, RolesEnum } from '@/common/decorators';
 
 @Controller('/categories')
 export class CategoryController {
@@ -25,6 +26,7 @@ export class CategoryController {
     return await this.service.getOne(id);
   }
 
+  // @Roles(RolesEnum.admin)
   @Post()
   async create(@Body() payload: CreateCategoryDto) {
     return await this.service.create(payload);

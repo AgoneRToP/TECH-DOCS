@@ -12,7 +12,7 @@ export class Category {
   @Prop({ type: SchemaTypes.ObjectId, ref: 'Category' })
   parentCategory?: string | Category;
 
-  @Prop({ ype: SchemaTypes.String, required: true, unique: true, lowercase: true })
+  @Prop({ type: SchemaTypes.String, required: true, unique: true, lowercase: true })
   slug: string;
 }
 

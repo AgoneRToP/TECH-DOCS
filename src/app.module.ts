@@ -6,8 +6,10 @@ import {
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CategoryModule, AdminModule, TopicModule } from '@/modules';
-import { LoggerMiddleware } from './middlewares';
+import { CategoryModule, AuthModule, TopicModule } from '@/modules';
+import { LoggerMiddleware } from './common/middlewares';
+import { RolesGuard } from './common/guards';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -21,10 +23,16 @@ import { LoggerMiddleware } from './middlewares';
       },
     }),
     MongooseModule.forRoot(process.env.MONGO_URL as string),
-    AdminModule,
+    AuthModule,
     CategoryModule,
     TopicModule,
   ],
+  // providers: [
+  //   {
+  //     provide: APP_GUARD,
+  //     useClass: RolesGuard,
+  //   },
+  // ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

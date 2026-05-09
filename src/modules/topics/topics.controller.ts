@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Render,
 } from '@nestjs/common';
 import { TopicService } from './topics.service';
 import { CreateTopicDto, UpdateTopicDto } from './dtos';
@@ -16,13 +17,29 @@ export class TopicController {
   constructor(private readonly service: TopicService) {}
 
   @Get()
+  @Render('topics')
   async getAll() {
-    return await this.service.getAll();
+    const topics = await this.service.getAll();
+    return { topics };
   }
 
+  // @Get('/:id')
+  // async getOne(@Param('id', ParseObjectIdPipe) id: string) {
+  //   return await this.service.getOne(id);
+  // }
+
   @Get('/:id')
-  async getOne(@Param('id', ParseObjectIdPipe) id: string) {
-    return await this.service.getOne(id);
+  @Render('topic-detail')
+  async getOne(@Param('id') id: string) {
+    const allTopics = await this.service.getAll();
+    const currentTopic = await this.service.getOne(id);
+    return { topics: allTopics, topic: currentTopic };
+  }
+
+  @Get('/create')
+  @Render('topic-form')
+  async renderCreateForm() {
+    return { title: 'Создать новый топик' };
   }
 
   @Post()
@@ -31,7 +48,10 @@ export class TopicController {
   }
 
   @Put('/:id')
-  async update(@Param('id', ParseObjectIdPipe) id: string, @Body() payload: UpdateTopicDto) {
+  async update(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @Body() payload: UpdateTopicDto,
+  ) {
     return await this.service.update(id, payload);
   }
 

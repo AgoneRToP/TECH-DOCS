@@ -1,24 +1,22 @@
 import {
-  BadRequestException,
   ConflictException,
   Injectable,
-  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Admin } from './models/auth.model';
-import { isObjectIdOrHexString, Model } from 'mongoose';
+import { User } from '../users';
+import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { LoginDto, RegisterDto } from './dtos';
 import bcrypt from 'bcrypt';
 
 @Injectable()
-export class AdminService {
+export class AuthService {
   constructor(
-    @InjectModel(Admin.name) private readonly adminModel: Model<Admin>,
+    @InjectModel(User.name) private readonly userModel: Model<User>,
   ) {}
 
   async register(payload: RegisterDto) {
-    const existing = await this.adminModel.findOne({ email: payload.email });
+    const existing = await this.userModel.findOne({ email: payload.email });
 
     if (existing)
       throw new ConflictException(
@@ -27,13 +25,13 @@ export class AdminService {
 
     const hashedPass = await this.hashPass(payload.password);
 
-    const admin = await this.adminModel.create({
+    const user = await this.userModel.create({
       username: payload.username,
       email: payload.email,
       password: hashedPass,
     });
 
-    const { password, ...result } = admin.toObject();
+    const { password, ...result } = user.toObject();
 
     return {
       success: true,
@@ -42,7 +40,7 @@ export class AdminService {
   }
 
   async login(payload: LoginDto) {
-    const existing = await this.adminModel.findOne({ email: payload.email });
+    const existing = await this.userModel.findOne({ email: payload.email });
 
     if (!existing) throw new UnauthorizedException('Неверная почта или пароль');
 
