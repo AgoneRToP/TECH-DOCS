@@ -8,8 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CategoryModule, AuthModule, TopicModule } from '@/modules';
 import { LoggerMiddleware } from './common/middlewares';
-import { RolesGuard } from './common/guards';
-import { APP_GUARD } from '@nestjs/core';
+// import { RolesGuard } from './common/guards';
+// import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [

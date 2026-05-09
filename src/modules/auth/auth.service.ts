@@ -61,12 +61,15 @@ export class AuthService {
     };
   }
 
-  private async hashPass(password: string) {
+  private async hashPass(password: string): Promise<string> {
     const hashed = await bcrypt.hash(password, 10);
     return hashed;
   }
 
-  private async comparePass(originalPass: string, hashedPass: string) {
+  private async comparePass(
+    originalPass: string,
+    hashedPass: string,
+  ): Promise<boolean> {
     const isSame = await bcrypt.compare(originalPass, hashedPass);
 
     return isSame;

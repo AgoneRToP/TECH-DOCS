@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Create | Tech Docs</title>
+</head>
+<body class="dark-theme">
+    <div class="app-wrapper">
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="https://nestjs.com" width="30">
+                <span>TECH DOCS</span>
+            </div>
+            <nav class="menu">
+                <div class="menu-label">CONTROLS</div>
+                <a href="/topics" class="menu-item">← Back to list</a>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div class="form-container">
+                <div class="breadcrumb">DOCS / TOPICS / CREATE</div>
+                <h1>Create a new topic</h1>
+                
+                <form id="createForm" class="nest-form">
+                    <div class="input-group">
+                        <label>Title</label>
+                        <input type="text" name="title" id="title" placeholder="e.g. Authentication" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Slug</label>
+                        <input type="text" name="slug" id="slug" placeholder="authentication-guide" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Category ID (ObjectId)</label>
+                        <input type="text" name="category" placeholder="652f..." required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Status</label>
+                        <select name="status">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Content</label>
+                        <textarea name="content" rows="10" placeholder="Write your content here..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">CREATE TOPIC</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Автоматическая генерация slug из заголовка
+        const titleInput = document.getElementById('title');
+        const slugInput = document.getElementById('slug');
+
+        titleInput.addEventListener('input', () => {
+            const slug = titleInput.value
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/(^-|-$)+/g, '');
+            slugInput.value = slug;
+        });
+
+        // Отправка формы через fetch
+        document.getElementById('createForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            const res = await fetch('/topics', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) window.location.href = '/topics';
+            else alert('Error creating topic');
+        });
+    </script>
+</body>
+</html>

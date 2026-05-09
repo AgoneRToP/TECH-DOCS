@@ -5,8 +5,9 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": [
-      { "include": "views/**/*", "watchAssets": true },
+      { "include": "views/**/*.hbs", "watchAssets": true },
       { "include": "public/**/*", "watchAssets": true }
-    ]
+    ],
+    "watchAssets": true
   }
 }

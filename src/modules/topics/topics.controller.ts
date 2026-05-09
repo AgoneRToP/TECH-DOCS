@@ -16,6 +16,12 @@ import { ParseObjectIdPipe } from '@nestjs/mongoose';
 export class TopicController {
   constructor(private readonly service: TopicService) {}
 
+  @Get('/create')
+  @Render('create-topic')
+  async renderCreatePage() {
+    return { title: 'Create Topic' };
+  }
+
   @Get()
   @Render('topics')
   async getAll() {
