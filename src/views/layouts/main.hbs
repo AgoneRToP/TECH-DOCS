@@ -1,41 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <title>Tech Docs</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}} - Docs App</title>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/hero.css">
+    <link rel="stylesheet" href="/css/docs.css">
 </head>
-<body class="dark-theme">
-    <div class="app-wrapper">
-        <!-- Боковое меню -->
-        <aside class="sidebar">
-            <div class="logo">
-                <img src="https://nestjs.com" width="40" alt="Logo">
-                <span>TECH DOCS</span>
-            </div>
-            <nav class="menu">
-                <div class="menu-item">INTRODUCTION</div>
-                <div class="menu-item has-submenu active">
-                    TOPICS
-                    <ul class="submenu">
-                        {{#each topics}}
-                            <li><a href="/topics/{{this._id}}" class="{{#if active}}active{{/if}}">{{this.title}}</a></li>
-                        {{/each}}
-                    </ul>
-                </div>
-                <div class="menu-item">CATEGORIES</div>
-            </nav>
-        </aside>
-
-        <!-- Основной контент -->
-        <main class="content">
-            <header class="top-nav">
-                <div class="search-bar">🔍 Search...</div>
-            </header>
-            <div class="article-body">
-                {{{body}}}
-            </div>
-        </main>
-    </div>
+<body>
+    {{> navbar}}
+    <main>
+        {{{body}}}
+    </main>
 </body>
 </html>

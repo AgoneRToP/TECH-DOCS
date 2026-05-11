@@ -1,0 +1,13 @@
+<form method="POST" action="/admin/topics" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="title">Sarlavha</label>
+        <input type="text" id="title" name="title" required class="form-input">
+    </div>
+    
+    <div class="form-group">
+        <label for="category">Kategoriya</label>
+        <select id="category" name="category" required class="form-select">
+            {{#each categories}}
+            <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+        </select

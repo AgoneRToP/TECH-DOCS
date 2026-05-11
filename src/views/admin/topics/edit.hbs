@@ -1,0 +1,36 @@
+<form method="POST" action="/admin/topics/{{_id}}" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT">
+    
+    <div class="form-group">
+        <label for="title">Sarlavha</label>
+        <input type="text" id="title" name="title" value="{{topic.title}}" required class="form-input">
+    </div>
+    
+    <div class="form-group">
+        <label for="category">Kategoriya</label>
+        <select id="category" name="category" required class="form-select">
+            {{#each categories}}
+            <option value="{{_id}}" {{#if (eq _id ../topic.category._id)}}selected{{/if}}>{{name}}</option>
+            {{/each}}
+        </select>
+    </div>
+    
+    <div class="form-group">
+        <label for="content">Mundarija</label>
+        <div id="editorjs" class="editor-container"></div>
+        <textarea id="content" name="content" style="display:none">{{topic.content}}</textarea>
+    </div>
+    
+    <div class="form-group">
+        <label for="status">Holat</label>
+        <select id="status" name="status" class="form-select">
+            <option value="draft" {{#if (eq topic.status "draft")}}selected{{/if}}>Draft</option>
+            <option value="published" {{#if (eq topic.status "published")}}selected{{/if}}>Nashr etilgan</option>
+        </select>
+    </div>
+    
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Saqlash</button>
+        <a href="/admin/topics" class="btn btn-secondary">Orqaga</a>
+    </div>
+</form>

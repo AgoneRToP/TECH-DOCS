@@ -1,0 +1,19 @@
+<section class="hero">
+    <div class="hero-content">
+        <h1>Hujjatlar markazi</h1>
+        <p>Barcha hujjatlar bu yerda</p>
+    </div>
+</section>
+
+<section class="docs-list">
+    {{#each topics}}
+    <article class="doc-card">
+        <h2><a href="/topic/{{slug}}">{{title}}</a></h2>
+        <p class="category">{{category.name}}</p>
+        <div class="meta">
+            <span>Muallif: {{author}}</span>
+            <span>{{createdAt}}</span>
+        </div>
+    </article>
+    {{/each}}
+</section>

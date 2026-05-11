@@ -1,0 +1,44 @@
+.topic-detail {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 20px;
+}
+
+.topic-detail header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.topic-detail h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.topic-meta {
+    display: flex;
+    gap: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.category {
+    background: #007bff;
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+}
+
+.topic-content {
+    line-height: 1.8;
+}
+
+.topic-content p {
+    margin-bottom: 1.5rem;
+}
+
+.topic-content h2 {
+    margin: 2rem 0 1rem;
+    font-size: 1.8rem;
+}

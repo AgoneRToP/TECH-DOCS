@@ -1,0 +1,27 @@
+<div class="dashboard">
+    <h2>Dashboard</h2>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Mavzular</h3>
+            <p class="stat-number">{{stats.topicsCount}}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Kategoriyalar</h3>
+            <p class="stat-number">{{stats.categoriesCount}}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Yangi mavzalar</h3>
+            <p class="stat-number">{{stats.recentTopics}}</p>
+        </div>
+    </div>
+    
+    <div class="recent-activity">
+        <h3>So'nggi faoliyat</h3>
+        <ul>
+            {{#each recentActivities}}
+            <li>{{action}} - {{createdAt}}</li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

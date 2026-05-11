@@ -12,33 +12,46 @@ import { CreateCategoryDto, UpdateCategoryDto } from './dtos';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 import { Roles, RolesEnum } from '@/common/decorators';
 
-@Controller('/categories')
+@Controller('admin/categories')
 export class CategoryController {
   constructor(private readonly service: CategoryService) {}
 
   @Get()
   async getAll() {
-    return await this.service.getAll();
+    const result = await this.service.getAll();
+    return result;
   }
 
-  @Get('/:id')
+  @Get(':id')
   async getOne(@Param('id', ParseObjectIdPipe) id: string) {
-    return await this.service.getOne(id);
+    const result = await this.service.getOne(id);
+    return result;
   }
 
-  // @Roles(RolesEnum.admin)
   @Post()
+  @Roles(RolesEnum.admin)
   async create(@Body() payload: CreateCategoryDto) {
-    return await this.service.create(payload);
+    const result = await this.service.create(payload);
+    return result;
   }
 
-  @Put('/:id')
-  async update(@Param('id', ParseObjectIdPipe) id: string, @Body() payload: UpdateCategoryDto) {
-    return await this.service.update(id, payload);
+  @Put(':id')
+  @Roles(RolesEnum.admin)
+  async update(
+    @Param('id', ParseObjectIdPipe) id: string,
+    @Body() payload: UpdateCategoryDto
+  ) {
+    const result = await this.service.update(id, payload);
+    return result;
   }
 
-  @Delete('/:id')
+  @Delete(':id')
+  @Roles(RolesEnum.admin)
   async delete(@Param('id', ParseObjectIdPipe) id: string) {
-    return await this.service.delete(id);
+    await this.service.delete(id);
+    return {
+      success: true,
+      message: 'Категория успешно удалена',
+    };
   }
 }

@@ -1,0 +1,17 @@
+<form method="POST" action="/admin/categories">
+    <div class="form-group">
+        <label for="name">Kategoriya nomi</label>
+        <input type="text" id="name" name="name" required class="form-input">
+    </div>
+    
+    <div class="form-group">
+        <label for="slug">Slug (URL uchun)</label>
+        <input type="text" id="slug" name="slug" required class="form-input">
+        <small>Faqat kichik harflar, chiziqcha va raqamlar: masalan, "web-dasturlash"</small>
+    </div>
+    
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Yaratish</button>
+        <a href="/admin/categories" class="btn btn-secondary">Orqaga</a>
+    </div>
+</form>

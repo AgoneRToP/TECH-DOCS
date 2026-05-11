@@ -14,5 +14,6 @@ export class UpdateCategoryDto {
   parentCategory?: string;
 
   @IsString()
+  @IsOptional()
   slug: string;
 }

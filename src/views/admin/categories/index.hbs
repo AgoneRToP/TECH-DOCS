@@ -1,0 +1,30 @@
+<div class="categories-list">
+    <div class="table-header">
+        <h2>Kategoriyalar ro'yxati</h2>
+        <a href="/admin/categories/create" class="btn btn-success">Yangi kategoriya</a>
+    </div>
+    
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Nomi</th>
+                <th>Slug</th>
+                <th>Yaratilgan</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each categories}}
+            <tr>
+                <td>{{name}}</td>
+                <td><code>{{slug}}</code></td>
+                <td>{{createdAt}}</td>
+                <td>
+                    <a href="/admin/categories/edit/{{_id}}" class="btn btn-sm btn-outline">Tahrir</a>
+                    <button class="btn btn-sm btn-danger" onclick="deleteCategory('{{_id}}')">O'chirish</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

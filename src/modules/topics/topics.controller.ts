@@ -12,57 +12,53 @@ import { TopicService } from './topics.service';
 import { CreateTopicDto, UpdateTopicDto } from './dtos';
 import { ParseObjectIdPipe } from '@nestjs/mongoose';
 
-@Controller('/topics')
+@Controller('admin/topics')
 export class TopicController {
   constructor(private readonly service: TopicService) {}
 
   @Get('/create')
-  @Render('create-topic')
+  @Render('admin/topics/create')
   async renderCreatePage() {
-    return { title: 'Create Topic' };
+    const categories = await this.service.getCategories();
+    return {
+      title: 'Create Topic',
+      categories,
+    };
   }
 
   @Get()
-  @Render('topics')
+  @Render('admin/topics/index')
   async getAll() {
-    const topics = await this.service.getAll();
+    const topics = await this.service.getAllWithCategories();
     return { topics };
   }
 
-  // @Get('/:id')
-  // async getOne(@Param('id', ParseObjectIdPipe) id: string) {
-  //   return await this.service.getOne(id);
-  // }
-
-  @Get('/:id')
-  @Render('topic-detail')
-  async getOne(@Param('id') id: string) {
-    const allTopics = await this.service.getAll();
-    const currentTopic = await this.service.getOne(id);
-    return { topics: allTopics, topic: currentTopic };
+  @Get(':id')
+  @Render('admin/topics/edit')
+  async getOne(@Param('id', ParseObjectIdPipe) id: string) {
+    const topic = await this.service.getOne(id);
+    const categories = await this.service.getCategories();
+    return { topic, categories };
   }
-
-  // @Get('/create')
-  // @Render('topic-form')
-  // async renderCreateForm() {
-  //   return { title: 'Создать новый топик' };
-  // }
 
   @Post()
   async create(@Body() payload: CreateTopicDto) {
-    return await this.service.create(payload);
+    const result = await this.service.create(payload);
+    return result;
   }
 
-  @Put('/:id')
+  @Put(':id')
   async update(
     @Param('id', ParseObjectIdPipe) id: string,
     @Body() payload: UpdateTopicDto,
   ) {
-    return await this.service.update(id, payload);
+    const result = await this.service.update(id, payload);
+    return result;
   }
 
-  @Delete('/:id')
+  @Delete(':id')
   async delete(@Param('id', ParseObjectIdPipe) id: string) {
-    return await this.service.delete(id);
+    await this.service.delete(id);
+    return { message: 'Topic deleted successfully' };
   }
 }

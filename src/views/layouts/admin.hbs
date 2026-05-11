@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - {{title}}</title>
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+    <div class="admin-container">
+        <aside class="sidebar">
+            {{> admin-sidebar}}
+        </aside>
+        <main class="admin-main">
+            <header class="admin-header">
+                {{> admin-navbar}}
+            </header>
+            <div class="content">
+                <h1>{{title}}</h1>
+                {{{body}}}
+            </div>
+        </main>
+    </div>
+</body>
+</html>

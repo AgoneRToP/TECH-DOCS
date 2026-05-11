@@ -1,0 +1,34 @@
+<link rel="stylesheet" href="/topic.css">
+
+<div class="topics-list">
+    <div class="table-header">
+        <h2>Mavzular ro'yxati</h2>
+        <a href="/admin/topics/create" class="btn btn-success">Yangi mavza</a>
+    </div>
+    
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>Sarlavha</th>
+                <th>Kategoriya</th>
+                <th>Holat</th>
+                <th>Yaratilgan</th>
+                <th>Amallar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each topics}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{category.name}}</td>
+                <td><span class="status {{status}}">{{status}}</span></td>
+                <td>{{createdAt}}</td>
+                <td>
+                    <a href="/admin/topics/edit/{{_id}}" class="btn btn-sm btn-outline">Tahrir</a>
+                    <button class="btn btn-sm btn-danger" onclick="deleteTopic('{{_id}}')">O'chirish</button>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
