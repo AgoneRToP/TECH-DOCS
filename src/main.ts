@@ -5,10 +5,13 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { LoggingInterceptor } from './common/interceptors';
 import { HttpExceptionFilter } from './common/filters';
+import cookieParser from 'cookie-parser';
 // import * as hbs from 'hbs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.use(cookieParser(process.env.COOKIE_SECRET))
 
   app.useStaticAssets(join(__dirname, 'public')); 
   app.setBaseViewsDir(join(__dirname, 'views'));
