@@ -6,7 +6,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { LoggingInterceptor } from './common/interceptors';
 import { HttpExceptionFilter } from './common/filters';
 import cookieParser from 'cookie-parser';
-// import * as hbs from 'hbs';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,8 +15,6 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, 'public')); 
   app.setBaseViewsDir(join(__dirname, 'views'));
   app.setViewEngine('hbs');
-
-  // hbs.registerPartials(join(viewsPath, 'partials'));
 
   app.useGlobalPipes(
     new ValidationPipe({

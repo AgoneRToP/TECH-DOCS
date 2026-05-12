@@ -10,7 +10,7 @@ import { LoginDto, RegisterDto } from './dtos';
 import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import { UserRoles } from '@/core';
 
 @Injectable()
@@ -107,6 +107,12 @@ export class AuthService {
       success: true,
       data: result,
     });
+  }
+
+  async refresh(req: Request, res: Response) {
+    const token = req.signedCookies?.["refreshToken"]
+
+    
   }
 
   private async hashPass(password: string): Promise<string> {

@@ -29,14 +29,14 @@ export class CategoryController {
   }
 
   @Post()
-  @Roles(RolesEnum.admin)
+  // @Roles(RolesEnum.admin)
   async create(@Body() payload: CreateCategoryDto) {
     const result = await this.service.create(payload);
     return result;
   }
 
   @Put(':id')
-  @Roles(RolesEnum.admin)
+  // @Roles(RolesEnum.admin)
   async update(
     @Param('id', ParseObjectIdPipe) id: string,
     @Body() payload: UpdateCategoryDto
@@ -46,7 +46,7 @@ export class CategoryController {
   }
 
   @Delete(':id')
-  @Roles(RolesEnum.admin)
+  // @Roles(RolesEnum.admin)
   async delete(@Param('id', ParseObjectIdPipe) id: string) {
     await this.service.delete(id);
     return {

@@ -1,7 +1,8 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, ForbiddenException, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { ROLES_KEY, RolesEnum } from '../decorators';
+import { ROLES_KEY } from '../decorators';
+import { UserRoles } from '@/core';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -10,19 +11,18 @@ export class RolesGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const roles = this.reflector.get<RolesEnum[]>(
+    const roles = this.reflector.get<UserRoles[]>(
       ROLES_KEY,
       context.getHandler(),
     );
 
-    const user = {
-      id: 1,
-      name: 'Alex',
-      role: RolesEnum.user,
-    };
+    const ctx = context.switchToHttp();
+    const request = ctx.getRequest();
 
-    const isExists = roles?.includes(user.role);
+    const role = request?.user?.role || UserRoles.viewer
 
-    return isExists;
+    if(!roles?.includes(role)) throw new ForbiddenException("user don't have access")
+
+    return true;
   }
 }
