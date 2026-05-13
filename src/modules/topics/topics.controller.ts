@@ -20,17 +20,14 @@ export class TopicController {
   @Render('admin/topics/create')
   async renderCreatePage() {
     const categories = await this.service.getCategories();
-    return {
-      title: 'Create Topic',
-      categories,
-    };
+    return { title: 'Create Topic', categories, layout: 'layouts/admin' };
   }
 
   @Get()
   @Render('admin/topics/index')
   async getAll() {
     const topics = await this.service.getAllWithCategories();
-    return { topics };
+    return { topics, layout: 'layouts/admin' };
   }
 
   @Get(':id')
@@ -38,7 +35,7 @@ export class TopicController {
   async getOne(@Param('id', ParseObjectIdPipe) id: string) {
     const topic = await this.service.getOne(id);
     const categories = await this.service.getCategories();
-    return { topic, categories };
+    return { topic, categories, layout: 'layouts/admin' };
   }
 
   @Post()
